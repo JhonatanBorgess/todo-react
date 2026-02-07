@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo List - React</title>
+
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    input {
+      width: 70%;
+      padding: 8px;
+    }
+
+    button {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    li {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+
+function App() {
+
+  const [task, setTask] = React.useState("");
+  const [tasks, setTasks] = React.useState([]);
+
+  function addTask() {
+    if (task !== "") {
+      setTasks([...tasks, task]);
+      setTask("");
+    }
+  }
+
+  function removeTask(index) {
+    const newTasks = tasks.filter((_, i) => i !== index);
+    setTasks(newTasks);
+  }
+
+  return (
+    <div className="container">
+
+      <h2>Lista de Tarefas</h2>
+
+      <input
+        type="text"
+        placeholder="Digite uma tarefa"
+        value={task}
+        onChange={(e) => setTask(e.target.value)}
+      />
+
+      <button onClick={addTask}>Adicionar</button>
+
+      <ul>
+        {tasks.map((item, index) => (
+          <li key={index}>
+            {item}
+            <button onClick={() => removeTask(index)}> ❌ </button>
+          </li>
+        ))}
+      </ul>
+
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+</script>
+
+</body>
+</html>
